@@ -20,7 +20,7 @@ def migrate_response_type(apps, schema_editor):
     for value, description in RESPONSE_TYPES:
         ResponseType.objects.using(db).create(value=value, description=description)
     for client in Client.objects.using(db).all():
-        client.response_types.add(ResponseType.objects.get(value=client.response_type))
+        client.response_types.add(ResponseType.objects.using(db).get(value=client.response_type))
 
 
 class Migration(migrations.Migration):
